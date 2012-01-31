@@ -18,7 +18,7 @@ Now enter your Twilio settings and phone number in ~/.twilio-auth/config.json.
 
 Now test that twilio-auth is working correctly:
 
-    SSH_CLIENT='0' ./twilio-auth.rb
+    SSH_CLIENT='0' ~/twilio-auth/twilio-auth.rb
 
 If all went well, you should have received a text containing an OTP. After entering the correct OTP, a new shell should have started.
 
