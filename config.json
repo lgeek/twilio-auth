@@ -1,0 +1,6 @@
+{
+  "account_sid" :   "ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  "auth_token" :    "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+  "twilio_number" : "+zzzzzzzzzzzz",
+  "own_number" :    "+nnnnnnnnnnnn"
+}
