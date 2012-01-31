@@ -24,11 +24,11 @@ def create_or_load_blocklist
 end
 
 def send_text(code)
-  twilio = Twilio::REST::Client.new @config[:account_sid], @config[:auth_token]
+  twilio = Twilio::REST::Client.new @config['account_sid'], @config['auth_token']
 
   result = twilio.account.sms.messages.create(
-    :from => @config[:twilio_number],
-    :to => @config[:own_number],
+    :from => @config['twilio_number'],
+    :to => @config['own_number'],
     :body => ('Here\'s your OTP for ' + Socket.gethostname + ': ')[0...140] + code
   )
 
