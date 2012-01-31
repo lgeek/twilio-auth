@@ -8,7 +8,7 @@ Install
 
 Note: you can install twilio-auth in another directory, just use the correct path in sshd_config.
 
-    irb install twilio-ruby
+    gem install twilio-ruby
     cd ~
     git clone git://github.com/lgeek/twilio-auth.git
     mkdir ~/.twilio-auth
