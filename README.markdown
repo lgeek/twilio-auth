@@ -29,3 +29,14 @@ Finally enable twilio-auth for ssh logins. Here's what I've added in my sshd_con
 	    PasswordAuthentication yes
 
 WARNING: By default twilio-auth permanently blocks the client's IP after entering the wrong OTP three times in a row. This can lock you out of your system. See the source code for how to change this into a temporary ban.
+
+Logging in with twilio-auth
+---------------------------
+
+    ssh login@machine
+    login@machine's password: 
+    Enter the OTP: 6yqdibt
+    Wrong OTP.
+    Enter the OTP: 6yqdibto
+    login@machine:~$ 
+
