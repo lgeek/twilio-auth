@@ -40,15 +40,37 @@ def generate_code(code_length)
   return (36**(code_length-1) + rand(36**code_length)).to_s(36)
 end
 
+def check_blocklist(client_ip)
+  # Uncomment to use temporary blocking
+  if @blocklist[client_ip] and @blocklist[client_ip]['count'] >= 3 #and (Time.now - Time.at(@blocklist[client_ip]['time'])) < 24*60*60
+    abort "You're blocked!"
+  end
+end
+
+def reset_count(client_ip)
+  if @blocklist[client_ip] and @blocklist[client_ip]['count'] > 0
+    @blocklist[client_ip]['count'] = 0
+    update_blocklist(@blocklist)
+  end
+end
+
+def increment_count(client_ip)
+  if @blocklist[client_ip]
+    @blocklist[client_ip]['count'] += 1
+  else
+    @blocklist[client_ip] = {}
+    @blocklist[client_ip]['count'] = 1
+  end
+  @blocklist[client_ip]['time'] = Time.now.to_i
+  update_blocklist(@blocklist)
+end
+
 @config = JSON.parse(File.new(@config_file).read)
 @blocklist = create_or_load_blocklist
 
 client_ip = ENV['SSH_CLIENT'].split(' ').first 
 
-# Uncomment to use temporary blocking
-if @blocklist[client_ip] #and (Time.now - Time.at(@blocklist[client_ip])) < 24*60*60
-  abort "You're blocked!"
-end
+check_blocklist(client_ip)
 
 code = generate_code(8)
 send_text(code)
@@ -56,13 +78,13 @@ send_text(code)
 for tries in 0...3
   print "Enter the OTP: "
   if gets()[0...-1] == code
+    reset_count(client_ip)
     Kernel.exec('$SHELL')
   else
+    increment_count(client_ip)
     puts "Wrong OTP."
   end
+  check_blocklist(client_ip)
 end
-
-@blocklist[client_ip] = Time.now.to_i
-update_blocklist(@blocklist)
 
 abort
